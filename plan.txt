@@ -1,0 +1,14 @@
+website ()
+- display rankings
+- input match (player 1, player 2, player 1 score, player 2 score)
+    - player would be a dropdown list
+- add player (player name, estimated skill level)
+
+database (sqlite)
+- Matches(match id, player 1, player 2, player 1 score, player 2 score)
+- Players(player, elo)
+
+elo system (python)
+- double getElo(String playerName)
+- void setElo(String playerName, double elo)
+- void calculateElo(match)
