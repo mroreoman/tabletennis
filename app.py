@@ -8,6 +8,13 @@ def get_db_connection():
     con.row_factory = sqlite3.Row
     return con
 
+def is_name_available(name: str) -> bool:
+    con = get_db_connection()
+    names = [row['name'] for row in con.execute('SELECT name FROM players').fetchall()]
+    con.close()
+    print(names)
+    return not name in names
+
 load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -27,7 +34,8 @@ def input():
 
         if not name:
             flash("Name is required!")
-        # check if name is already taken
+        elif not is_name_available(name):
+            flash("Name is taken!")
         else:
             if not elo: elo = 100
             con = get_db_connection()
