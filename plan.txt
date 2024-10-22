@@ -12,3 +12,5 @@ elo system (python)
 - double getElo(String playerName)
 - void setElo(String playerName, double elo)
 - void calculateElo(match)
+
+https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
