@@ -7,4 +7,11 @@
             <li>{{ player['name'] }} {{ player['elo'] }}</li>
         {% endfor %}
     </ol>
+    
+    <h2>match history</h2>
+    <ul>
+        {% for match in matches %}
+            <li>{{ match['player1'] }} {{ match['score1'] }} - {{ match['score2'] }} {{ match['player2'] }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -27,8 +27,9 @@ def index():
 def rankings():
     con = get_db_connection()
     players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
+    matches = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
     con.close()
-    return render_template('rankings.html', players=players)
+    return render_template('rankings.html', players=players, matches=matches)
 
 
 @app.route('/player', methods=('GET', 'POST'))
