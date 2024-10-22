@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS matches;
 
 CREATE TABLE players (
     'name' TEXT PRIMARY KEY,
-    'elo' INTEGER NOT NULL
+    'elo' REAL NOT NULL
 );
 
 CREATE TABLE matches (
