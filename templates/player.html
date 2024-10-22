@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>add players</h1>
+    <form method="post">
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="player name"
+            value="{{ request.form['name'] }}"></input>
+
+        <label for="elo">Elo</label>
+        <input type="number" name="elo" value="{{ request.form['elo'] }}"></input>
+
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

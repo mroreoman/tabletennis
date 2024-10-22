@@ -21,13 +21,18 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
+    return redirect('/rankings')
+
+@app.route('/rankings')
+def rankings():
     con = get_db_connection()
     players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
     con.close()
-    return render_template('index.html', players=players)
+    return render_template('rankings.html', players=players)
 
-@app.route('/input', methods=('GET', 'POST'))
-def input():
+
+@app.route('/player', methods=('GET', 'POST'))
+def player():
     if request.method == 'POST':
         name = request.form['name']
         elo = request.form['elo']
@@ -44,4 +49,8 @@ def input():
             con.close()
             return redirect(url_for('index'))
 
-    return render_template('input.html')
+    return render_template('player.html')
+
+@app.route('/match')
+def match():
+    return render_template('match.html')

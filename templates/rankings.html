@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>rankings</h2>
+    <ol>
+        {% for player in players %}
+            <li>{{ player['name'] }} {{ player['elo'] }}</li>
+        {% endfor %}
+    </ol>
+{% endblock %}
