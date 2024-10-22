@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+        <title>TableTennis</title>
+    </head>
+
+    <body>
+        <h1>add players</h1>
+        <form method="post">
+            <label for="name">Name</label>
+            <input type="text" name="name" placeholder="player name"
+                value="{{ request.form['name'] }}"></input>
+
+            <label for="elo">Elo</label>
+            <input type="number" name="elo" value="{{ request.form['elo'] }}"></input>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="container">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+            {% block content %} {% endblock %}
+        </div>
+    </body>
+</html>
