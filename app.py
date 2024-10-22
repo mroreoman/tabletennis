@@ -2,6 +2,7 @@ import sqlite3
 from dotenv import load_dotenv
 import os
 from flask import Flask, render_template, request, url_for, flash, redirect
+from datetime import date
 
 def get_db_connection():
     con = sqlite3.connect('database.db')
@@ -50,6 +51,15 @@ def player():
 
     return render_template('player.html')
 
-@app.route('/match')
+@app.route('/match', methods=('GET', 'POST'))
 def match():
+    if request.method == 'POST':
+        player1 = request.form['player1']
+        score1 = request.form['score1']
+        player2 = request.form['player2']
+        score2 = request.form['score2']
+        d = date.today()
+
+        print(d,player1,score1,player2,score2)
+    
     return render_template('match.html', names=get_names())

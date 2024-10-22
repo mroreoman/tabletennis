@@ -6,24 +6,24 @@
             <label for="player1">player 1: </label>
             <select id="player1" name="player1">
                 {% for name in names %}
-                    <option value="{{ name }}">{{ name }}</option>
+                    <option>{{ name }}</option>
                 {% endfor %}
             </select>
             
             <label for="p1 score">p1 score</label>
-            <input type="number" id="p1 score" name="p1 score" value="{{ request.form['p1score'] }}"></input>
+            <input type="number" id="p1 score" name="score1" value="{{ request.form['p1score'] }}"></input>
         </div>
 
         <div>
             <label for="player2">player 2: </label>
             <select id="player2" name="player2">
                 {% for name in names %}
-                    <option value="{{ name }}">{{ name }}</option>
+                    <option>{{ name }}</option>
                 {% endfor %}
             </select>
     
             <label for="p2 score">p2 score</label>
-            <input type="number" id="p2 score" name="p2 score" value="{{ request.form['p2score'] }}"></input>
+            <input type="number" id="p2 score" name="score2" value="{{ request.form['p2score'] }}"></input>
         </div>
 
         <button type="submit">Submit</button>
