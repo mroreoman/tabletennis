@@ -38,9 +38,7 @@ def player():
         name = request.form['name']
         elo = request.form['elo']
 
-        if not name:
-            flash("Name is required!")
-        elif not name in get_names():
+        if name in get_names():
             flash("Name is taken!")
         else:
             if not elo: elo = 100
@@ -55,12 +53,20 @@ def player():
 @app.route('/match', methods=('GET', 'POST'))
 def match():
     if request.method == 'POST':
-        player1 = request.form['player1']
-        score1 = request.form['score1']
-        player2 = request.form['player2']
-        score2 = request.form['score2']
-        d = date.today()
+        print(request.form)
+        if not request.form['player1'] or not request.form['player2']:
+            flash("Player 2 not selected!")
+        else:
+            p1 = request.form['player1']
+            s1 = request.form['score1']
+            p2 = request.form['player2']
+            s2 = request.form['score2']
+            d = date.today()
 
-        print(d,player1,score1,player2,score2)
+            con = get_db_connection()
+            con.execute("INSERT INTO matches(player1,score1,player2,score2,date) VALUES(?, ?, ?, ?, ?)", (p1, s1, p2, s2, d))
+            con.commit()
+            con.close()
+            return redirect(url_for('index'))
     
     return render_template('match.html', names=get_names())

@@ -9,9 +9,16 @@
     </ol>
     
     <h2>match history</h2>
-    <ul>
+    <table>
+        <tr>
+            <th>score</th>
+            <th>date</th>
+        </tr>
         {% for match in matches %}
-            <li>{{ match['player1'] }} {{ match['score1'] }} - {{ match['score2'] }} {{ match['player2'] }}</li>
+        <tr>
+            <td>{{ match['player1'] }} {{ match['score1'] }} - {{ match['score2'] }} {{ match['player2'] }}</td>
+            <td>{{ match['date'] }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

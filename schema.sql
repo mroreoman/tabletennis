@@ -11,5 +11,6 @@ CREATE TABLE matches (
     'player1' TEXT REFERENCES players('name'),
     'score1' INTEGER NOT NULL,
     'player2' TEXT REFERENCES players('name'),
-    'score2' INTEGER NOT NULL
+    'score2' INTEGER NOT NULL,
+    'date' DATE
 );

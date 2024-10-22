@@ -4,26 +4,28 @@
     <form method="post">
         <div>
             <label for="player1">player 1: </label>
-            <select id="player1" name="player1">
+            <select id="player1" name="player1" required>
+                <option hidden disabled selected value> -- select an option -- </option>
                 {% for name in names %}
                     <option>{{ name }}</option>
                 {% endfor %}
             </select>
             
             <label for="p1 score">p1 score</label>
-            <input type="number" id="p1 score" name="score1" value="{{ request.form['p1score'] }}"></input>
+            <input type="number" id="p1 score" name="score1" required>
         </div>
 
         <div>
             <label for="player2">player 2: </label>
-            <select id="player2" name="player2">
+            <select id="player2" name="player2" required>
+                <option hidden disabled selected value> -- select an option -- </option>
                 {% for name in names %}
                     <option>{{ name }}</option>
                 {% endfor %}
             </select>
     
             <label for="p2 score">p2 score</label>
-            <input type="number" id="p2 score" name="score2" value="{{ request.form['p2score'] }}"></input>
+            <input type="number" id="p2 score" name="score2" required>
         </div>
 
         <button type="submit">Submit</button>
