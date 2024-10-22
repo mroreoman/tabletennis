@@ -1,8 +1,11 @@
 import sqlite3
+import math
 from dotenv import load_dotenv
 import os
 from flask import Flask, render_template, request, url_for, flash, redirect
 from datetime import date
+
+elo_K = 30
 
 def get_db_connection():
     con = sqlite3.connect('database.db')
@@ -14,6 +17,19 @@ def get_names():
     names = [row['name'] for row in con.execute('SELECT name FROM players').fetchall()]
     con.close()
     return names
+
+def calculate_elo(s1, s2, elo1, elo2):
+    odds = 1.0 / (1 + math.pow(10, (elo1 - elo2) / 400.0))
+
+    sWin = max(s1,s2)
+    outcome = s1/sWin #1=p1 wins, 0=p2 wins
+
+    new1 = elo1 + elo_K * (outcome - odds)
+    new2 = elo2 + elo_K * (odds - outcome)
+    print(f"p1: {elo1} -> {new1}")
+    print(f"p2: {elo2} -> {new2}")
+
+    return (new1, new2)
 
 load_dotenv()
 app = Flask(__name__)
@@ -64,9 +80,20 @@ def match():
             d = date.today()
 
             con = get_db_connection()
+            print(p1)
+            elo1 = con.execute('SELECT elo FROM players WHERE name=?',p1).fetchone() #treating this like char array???
+            elo2 = con.execute('SELECT elo FROM players WHERE name=?',p2).fetchone()
+
             con.execute("INSERT INTO matches(player1,score1,player2,score2,date) VALUES(?, ?, ?, ?, ?)", (p1, s1, p2, s2, d))
+            
+            new1,new2 = calculate_elo(s1,s2,elo1,elo2)
+
+            con.execute('UPDATE players SET elo=? WHERE name=?', new1, p1)
+            con.execute('UPDATE players SET elo=? WHERE name=?', new2, p2)
+            
             con.commit()
             con.close()
+
             return redirect(url_for('index'))
     
     return render_template('match.html', names=get_names())

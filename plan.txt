@@ -5,9 +5,11 @@ website
     - new player option (player name, estimated skill level)
         - skill level would be either another player or beginner/intermediate/advanced, don't want to put in raw elo number
         - or just have it be a default elo
+- match odds
 
 database (sqlite)
 - Matches(match id, player 1, player 2, player 1 score, player 2 score)
+    - add prev elo
 - Players(player, elo)
 
 elo system (python)
@@ -16,3 +18,4 @@ elo system (python)
 - void calculateElo(match)
 
 https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
+https://www.geeksforgeeks.org/elo-rating-algorithm/
