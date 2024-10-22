@@ -8,11 +8,10 @@
 
     <body>
         <h1>le website des rankinges du tennis de table</h1>
-        <dl>
+        <ol>
             {% for player in players %}
-                <dt>{{ player['name'] }}</dt>
-                <dd>{{ player['elo'] }}</dd>
+                <li>{{ player['name'] }} {{ player['elo'] }}</li>
             {% endfor %}
-        </dl>
+        </ol>
     </body>
 </html>
