@@ -19,3 +19,4 @@ elo system (python)
 
 https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
 https://www.geeksforgeeks.org/elo-rating-algorithm/
+https://help.pythonanywhere.com/pages/Flask/
