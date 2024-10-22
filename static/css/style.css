@@ -4,3 +4,9 @@ h1 {
     text-align: center;
     padding: 10px;
 }
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown:hover .dropdown-content {display: block;}

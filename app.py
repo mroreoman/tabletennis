@@ -8,12 +8,11 @@ def get_db_connection():
     con.row_factory = sqlite3.Row
     return con
 
-def is_name_available(name: str) -> bool:
+def get_names():
     con = get_db_connection()
     names = [row['name'] for row in con.execute('SELECT name FROM players').fetchall()]
     con.close()
-    print(names)
-    return not name in names
+    return names
 
 load_dotenv()
 app = Flask(__name__)
@@ -39,7 +38,7 @@ def player():
 
         if not name:
             flash("Name is required!")
-        elif not is_name_available(name):
+        elif not name in get_names():
             flash("Name is taken!")
         else:
             if not elo: elo = 100
@@ -53,4 +52,4 @@ def player():
 
 @app.route('/match')
 def match():
-    return render_template('match.html')
+    return render_template('match.html', names=get_names())
