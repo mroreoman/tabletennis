@@ -55,12 +55,18 @@ def rankings():
 def player():
     if request.method == 'POST':
         name = request.form['name'].strip()
+        # name = request.form['name']
         elo = elo_default if not request.form['elo'] else request.form['elo']
 
         try:
             elo = int(elo)
-        except:
+            # name = name.strip()
+            # if not name:
+            #     raise Exception
+        except ValueError:
             flash("elo must be an integer!")
+        # except Exception:
+        #     flash("name must exist!")
         else:
             if name in get_names():
                 flash("Name is taken!")
