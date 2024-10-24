@@ -5,7 +5,9 @@ import os
 from flask import Flask, render_template, request, url_for, flash, redirect
 from datetime import date
 
-elo_K = 30
+elo_K = 32
+elo_default = 100
+elo_max = 10000
 
 def get_db_connection():
     con = sqlite3.connect('database.db')
@@ -19,10 +21,9 @@ def get_names():
     return names
 
 def calculate_elo(s1, s2, elo1, elo2):
-    odds = 1.0 / (1 + math.pow(10, (elo1 - elo2) / 400.0)) #1=p1 wins, 0=p2 wins
-
-    # sWin = max(s1,s2)
-    outcome = ((s1-s2) / max(s1,s2) + 1) / 2 #1=p1 wins, 0=p2 wins
+    #1=p1 wins, 0=p2 wins
+    odds = 1.0 / (1 + math.pow(10, (elo1 - elo2) / 400.0))
+    outcome = ((s1-s2) / max(s1,s2) + 1) / 2
     print(f"odds: {odds}")
     print(f"score: {s1} - {s2}")
     print(f"outcome: {outcome}")
@@ -50,31 +51,38 @@ def rankings():
     con.close()
     return render_template('rankings.html', players=players, matches=matches)
 
-
 @app.route('/player', methods=('GET', 'POST'))
 def player():
     if request.method == 'POST':
-        name = request.form['name']
-        elo = request.form['elo']
+        name = request.form['name'].strip()
+        elo = elo_default if not request.form['elo'] else request.form['elo']
 
-        if name in get_names():
-            flash("Name is taken!")
+        try:
+            elo = int(elo)
+        except:
+            flash("elo must be an integer!")
         else:
-            if not elo: elo = 100
-            con = get_db_connection()
-            con.execute('INSERT INTO players VALUES (?, ?)', (name, elo))
-            con.commit()
-            con.close()
-            return redirect(url_for('index'))
+            if name in get_names():
+                flash("Name is taken!")
+            elif elo < 0 or elo > elo_max:
+                flash(f"elo must be between 0 and {elo_max}!")
+            else:
+                con = get_db_connection()
+                con.execute('INSERT INTO players VALUES (?, ?)', (name, elo))
+                con.commit()
+                con.close()
+                return redirect(url_for('index'))
 
-    return render_template('player.html')
+    return render_template('player.html', max_elo = elo_max)
 
 @app.route('/match', methods=('GET', 'POST'))
 def match():
     if request.method == 'POST':
         print(request.form)
         if not request.form['player1'] or not request.form['player2']:
-            flash("Player 2 not selected!")
+            flash("Players not selected!")
+        elif request.form['player1'] == request.form['player2']:
+            flash("u played urself!")
         else:
             p1 = request.form['player1']
             s1 = int(request.form['score1'])
