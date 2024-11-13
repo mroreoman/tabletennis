@@ -7,16 +7,19 @@
     </head>
 
     <body>
-        <nav class="navbar">
-            <a href="/rankings">rankings</a>
-            <a href="/player">player</a>
-            <a href="/match">match</a>
-        </nav>
+        <header>
+            <h1>CCM Table Tennis Rankings</h1>
+    
+            <nav>
+                <a href="/rankings">rankings</a>
+                <a href="/player">player</a>
+                <a href="/match">match</a>
+            </nav>
+        </header>
 
-        <h1>le website des rankinges du tennis de table</h1>
         <div class="container">
             {% for message in get_flashed_messages() %}
-                <div>{{ message }}</div>
+                <div class="message">{{ message }}</div>
             {% endfor %}
             {% block content %} {% endblock %}
         </div>

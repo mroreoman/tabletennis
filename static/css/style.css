@@ -1,8 +1,35 @@
-h1 {
-    border: 2px #eee solid;
-    color: brown;
+header {
+    color: black;
     text-align: center;
+    background-color: pink;
     padding: 10px;
+}
+
+nav a {
+    color: inherit;
+    margin: 0 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+ol {
+    padding-left: 0;
+    list-style: upper-alpha inside;
+}
+
+.block {
+    margin: 10px auto;
+    /* width: calc(100% - 4rem); */
+    width: 50%;
+    border-style: solid;
+}
+
+.center {
+    margin: 10px auto;
+    width: calc(100% - 20px);
+    /* padding: 10px; */
 }
 
 .dropdown-content {
