@@ -11,17 +11,24 @@
             <h1>CCM Table Tennis Rankings</h1>
     
             <nav>
-                <a href="/rankings">rankings</a>
+                <a href="/">rankings</a>
                 <a href="/player">player</a>
                 <a href="/match">match</a>
             </nav>
+            
+            <div>
+                {% for message in get_flashed_messages() %}
+                    <p class="error">ERROR: {{ message }}</p>
+                {% endfor %}
+            </div>
         </header>
 
         <div class="container">
-            {% for message in get_flashed_messages() %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
             {% block content %} {% endblock %}
         </div>
+
+        <footer>
+            <p>Made by Aryan Singh</p>
+        </footer>
     </body>
 </html>

@@ -46,15 +46,18 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
-    return redirect('/rankings')
+    try:
+        con = get_db_connection()
+        players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
+        con.close()
+    except:
+        players = []
+        flash("Could not find database!")
+    return render_template('rankings.html', players=players)
 
-@app.route('/rankings')
-def rankings():
-    con = get_db_connection()
-    players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
-    matches = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
-    con.close()
-    return render_template('rankings.html', players=players, matches=matches)
+# @app.route('/rankings')
+# def rankings():
+#     return redirect('/')
 
 @app.route('/player', methods=('GET', 'POST'))
 def player():

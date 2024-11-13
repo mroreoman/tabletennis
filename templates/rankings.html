@@ -1,28 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="block" id="rankings">
-        <h1>rankings</h1>
-        <ol class="center">
+    <div class="rankings">
+        <ul>
             {% for player in players %}
-                <li>{{ player['name'] }} {{ player['elo'] }}</li>
+                <li>
+                    <span class="elo"><span class="inner">{{ player['elo'] }}</span></span>
+                    <span class="player"><span class="inner">{{ player['name'] }}</span></span>
+                </li>
             {% endfor %}
-        </ol>
-    </div>
-    
-    <div class="block">
-        <h1>match history</h1>
-        <table class="center">
-            <tr>
-                <th>score</th>
-                <th>date</th>
-            </tr>
-            {% for match in matches %}
-            <tr>
-                <td>{{ match['player1'] }} {{ match['score1'] }} - {{ match['score2'] }} {{ match['player2'] }}</td>
-                <td>{{ match['date'] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        </ul>
     </div>
 {% endblock %}
