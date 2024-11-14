@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     cur = con.cursor()
 
-    if len(sys.argv) > 1 and sys.argv[1] == "--fill":
+    if len(sys.argv) > 1 and sys.argv[1] == "-fill":
         player_sample = [("Hector", 1), ("Aryan", 2), ("Nabil", 300), ("Esau", 299)]
         cur.executemany("INSERT INTO players VALUES(?, ?)", player_sample)
 

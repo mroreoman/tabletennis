@@ -19,6 +19,12 @@ def get_db_connection() -> sqlite3.Connection:
     con.row_factory = sqlite3.Row
     return con
 
+def get_players() -> list[sqlite3.Row]:
+    con = get_db_connection()
+    players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
+    con.close()
+    return players
+
 def get_names() -> list[str]:
     con = get_db_connection()
     names = [row['name'] for row in con.execute('SELECT name FROM players').fetchall()]
@@ -46,15 +52,15 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
-    return redirect('/rankings')
+    try:
+        return render_template('rankings.html', players=get_players())
+    except:
+        flash("Could not find database!")
+        return render_template('rankings.html', players=[])
 
-@app.route('/rankings')
-def rankings():
-    con = get_db_connection()
-    players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
-    matches = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
-    con.close()
-    return render_template('rankings.html', players=players, matches=matches)
+@app.route('/input')
+def input():
+    return render_template('input.html', names=get_names(), max_elo=ELO_MAX)
 
 @app.route('/player', methods=('GET', 'POST'))
 def player():
@@ -79,15 +85,14 @@ def player():
                 con.commit()
                 con.close()
                 return redirect(url_for('index'))
-
-    return render_template('player.html', max_elo = ELO_MAX)
+    return redirect(url_for('input'))
 
 @app.route('/match', methods=('GET', 'POST'))
 def match():
     if request.method == 'POST':
         print(request.form)
         try: 
-            p1:str = request.form['player1']
+            p1 = request.form['player1']
             s1 = int(request.form['score1'])
             p2 = request.form['player2']
             s2 = int(request.form['score2'])
@@ -104,20 +109,13 @@ def match():
                 flash("Score can't be tied!")
             else:
                 con = get_db_connection()
-                print(p1)
-                elo1:float = con.execute('SELECT elo FROM players WHERE name=?',(p1,)).fetchone()['elo'] #treating this like char array???
-                elo2:float = con.execute('SELECT elo FROM players WHERE name=?',(p2,)).fetchone()['elo']
-
                 con.execute("INSERT INTO matches(player1,score1,player2,score2,date) VALUES(?, ?, ?, ?, ?)", (p1, s1, p2, s2, date.today()))
-                
+                elo1:float = con.execute('SELECT elo FROM players WHERE name=?',(p1,)).fetchone()['elo']
+                elo2:float = con.execute('SELECT elo FROM players WHERE name=?',(p2,)).fetchone()['elo']
                 new1,new2 = calculate_elo(s1,s2,elo1,elo2)
-
                 con.execute('UPDATE players SET elo=? WHERE name=?', (new1, p1))
                 con.execute('UPDATE players SET elo=? WHERE name=?', (new2, p2))
-                
                 con.commit()
                 con.close()
-
                 return redirect(url_for('index'))
-    
-    return render_template('match.html', names=get_names())
+    return redirect(url_for('input'))

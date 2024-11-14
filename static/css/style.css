@@ -1,39 +1,81 @@
-header {
-    color: black;
-    text-align: center;
-    background-color: pink;
-    padding: 10px;
-}
+/* Reset */
+    h1, h2, p {
+        padding: 0;
+        margin: 0;
+    }
 
-nav a {
-    color: inherit;
-    margin: 0 20px;
-}
+/* Base */
+    header {
+        background-color: pink;
+        padding: 10px;
+        color: black;
+        text-align: center;
+    }
 
-h1 {
-    text-align: center;
-}
+    nav a {
+        color: inherit;
+        margin: 0;
+        padding: 10px 25px;
+    }
 
-ol {
-    padding-left: 0;
-    list-style: upper-alpha inside;
-}
+    nav a:hover {
+        color: cornflowerblue;
+    }
 
-.block {
-    margin: 10px auto;
-    /* width: calc(100% - 4rem); */
-    width: 50%;
-    border-style: solid;
-}
+    .error {
+        background-color: pink;
+        padding: 10px;
+        color: red;
+        text-align: center;
+    }
 
-.center {
-    margin: 10px auto;
-    width: calc(100% - 20px);
-    /* padding: 10px; */
-}
+    footer {
+        background-color: pink;
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        padding: 10px;
+        color: black;
+        text-align: center;
+    }
 
-.dropdown-content {
-    display: none;
-}
+/* Rankings */
 
-.dropdown:hover .dropdown-content {display: block;}
+    .rankings {
+        padding: 10px;
+    }
+
+    .rankings ul {
+        list-style-type: none;
+    }
+
+    .elo {
+        float: left;
+        width: 50%;
+        text-align: right;
+        font-size: large;
+    }
+
+    .player {
+        float: left;
+        width: 50%;
+        text-align: left;
+        font-size: large;
+    }
+
+    .inner {
+        display: inline-block;
+        padding: 5px;
+    }
+
+/* Input */
+
+    .form {
+        padding: 20px;
+    }
+
+    .dropdown-content {
+        display: none;
+    }
+
+    .dropdown:hover .dropdown-content {display: block;}
