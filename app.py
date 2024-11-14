@@ -53,10 +53,11 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 @app.route('/')
 def index():
     try:
-        return render_template('rankings.html', players=get_players())
+        players=get_players()
     except:
+        players=[]
         flash("Could not find database!")
-        return render_template('rankings.html', players=[])
+    return render_template('rankings.html', players=players)
 
 @app.route('/input')
 def input():
