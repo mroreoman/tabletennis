@@ -1,33 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="post">
-        <div>
-            <label for="player1">player 1: </label>
-            <select id="player1" name="player1" required>
-                <option hidden disabled selected value> -- select an option -- </option>
-                {% for name in names %}
-                    <option>{{ name }}</option>
-                {% endfor %}
-            </select>
-            
-            <label for="p1 score">p1 score</label>
-            <input type="number" min="0" max = {{ max_score }} id="p1 score" name="score1" required>
-        </div>
+    <div class="form">
+        <h2>add match</h2>
+        <form action="/match" method="post">
+            <div>
+                <label for="player1">player 1: </label>
+                <select id="player1" name="player1" required>
+                    <option hidden disabled selected value> -- select an option -- </option>
+                    {% for name in names %}
+                        <option>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <label for="p1score">score: </label>
+                <input type="number" min="0" max = {{ max_score }} id="p1score" name="score1" required>
+            </div>
 
-        <div>
-            <label for="player2">player 2: </label>
-            <select id="player2" name="player2" required>
-                <option hidden disabled selected value> -- select an option -- </option>
-                {% for name in names %}
-                    <option>{{ name }}</option>
-                {% endfor %}
-            </select>
-    
-            <label for="p2 score">p2 score</label>
-            <input type="number" min="0" max={{ max_score }} id="p2 score" name="score2" required>
-        </div>
+            <div>
+                <label for="player2">player 2: </label>
+                <select id="player2" name="player2" required>
+                    <option hidden disabled selected value> -- select an option -- </option>
+                    {% for name in names %}
+                        <option>{{ name }}</option>
+                    {% endfor %}
+                </select>
+        
+                <label for="p2score">score: </label>
+                <input type="number" min="0" max={{ max_score }} id="p2score" name="score2" required>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="form">
+        <h2>add players</h2>
+        <form action="/player" method="post">
+            <label for="name">name: </label>
+            <input type="text" maxlength="50" id="name" name="name" placeholder="player name" required>
+            <br>
+            <label for="elo">elo (optional):</label>
+            <input type="number" min="0" max={{ max_elo }} id="elo" name="elo">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 {% endblock %}

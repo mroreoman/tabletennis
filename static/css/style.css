@@ -1,5 +1,5 @@
 /* Reset */
-    h1, p {
+    h1, h2, p {
         padding: 0;
         margin: 0;
     }
@@ -41,18 +41,6 @@
 
 /* Rankings */
 
-    /* .column {
-        float: left;
-        width: 50%
-    } */
-
-    /* stack collumns vertically for small screens */
-    /* @media screen and (max-width: 600px) {
-        .column {
-            width: 100%;
-        }
-    } */
-
     .rankings {
         padding: 10px;
     }
@@ -60,10 +48,6 @@
     .rankings ul {
         list-style-type: none;
     }
-
-    /* .rankings li {
-        width: 100%
-    } */
 
     .elo {
         float: left;
@@ -85,6 +69,10 @@
     }
 
 /* Input */
+
+    .form {
+        padding: 20px;
+    }
 
     .dropdown-content {
         display: none;
