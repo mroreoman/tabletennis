@@ -52,6 +52,10 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
+    return redirect(url_for('rankings'))
+
+@app.route('/rankings')
+def rankings():
     try:
         players=get_players()
     except:
@@ -62,6 +66,12 @@ def index():
 @app.route('/input')
 def input():
     return render_template('input.html', names=get_names(), max_elo=ELO_MAX)
+
+@app.route('/matches')
+def matches():
+    con = get_db_connection()
+    matches = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
+    return render_template('matches.html', matches=matches)
 
 @app.route('/player', methods=('GET', 'POST'))
 def player():
