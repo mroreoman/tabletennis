@@ -71,6 +71,7 @@ def input():
 def matches():
     con = get_db_connection()
     matches = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
+    con.close()
     return render_template('matches.html', matches=matches)
 
 @app.route('/player', methods=('GET', 'POST'))
