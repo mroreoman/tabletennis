@@ -3,14 +3,34 @@
 {% block content %}
     <div class="matches">
         <h2>match history</h2>
-        <table>
+        <table style="text-align: center;">
             <tr>
-                <th>score</th>
+                <th></th>
+                <th>player 1</th>
+                <th></th>
+                <th></th>
+                <th>player 2</th>
+                <th></th>
                 <th>date</th>
             </tr>
             {% for match in matches %}
             <tr>
-                <td>{{ match['player1'] }} {{ match['score1'] }} - {{ match['score2'] }} {{ match['player2'] }}</td>
+                {% if match['elochange1'] > 0 %}
+                    <td class="pos">+{{ match['elochange1']|round(1) }}</td>
+                {% else %}
+                    <td class="neg">{{ match['elochange1']|round(1) }}</td>
+                {% endif %}
+                <td>{{ match['player1'] }}</td>
+                <td>{{ match['score1'] }}</td>
+
+                <td>{{ match['score2'] }}</td>
+                <td>{{ match['player2'] }}</td>
+                {% if match['elochange2'] > 0 %}
+                    <td class="pos">+{{ match['elochange2']|round(1) }}</td>
+                {% else %}
+                    <td class="neg">{{ match['elochange2']|round(1) }}</td>
+                {% endif %}
+
                 <td>{{ match['date'] }}</td>
             </tr>
             {% endfor %}

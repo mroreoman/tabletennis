@@ -79,3 +79,13 @@
     }
 
     .dropdown:hover .dropdown-content {display: block;}
+
+/* Matches */
+
+    .pos {
+        color: green;
+    }
+
+    .neg {
+        color: red;
+    }

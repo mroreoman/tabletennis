@@ -3,7 +3,7 @@ import math
 # https://www.desmos.com/calculator/1tgkozjght
 
 class EloSystem:
-    def __init__(self, dom_point:int, k_factor:int, adjust_outcomes:bool):
+    def __init__(self, default_elo:int, dom_point:int, k_factor:int, adjust_outcomes:bool = False):
         """creates elo system
 
         overall graph https://www.desmos.com/calculator/1tgkozjght
@@ -12,7 +12,10 @@ class EloSystem:
             dom_point: the elo gap at which the higher rated player has a 90% chance of winning
             k_factor: maximum adjustment per game
             adjust_outcomes: adjusts to make close outcomes more valuable (e.g. 11-10 win acts more like 11-6)
+
+        ADJUST OUTCOMES NOT FULLY IMPLEMENTED YET
         """
+        self.default = default_elo
         self.D = dom_point
         self.K = k_factor
         self.adjust = adjust_outcomes
@@ -24,7 +27,7 @@ class EloSystem:
     
     def calculate_outcome(self, s1:int, s2:int) -> float:
         outcome = (s1-s2) / max(s1,s2)
-        if self.adjust:
+        if self.adjust: #TODO: finish this
             outcome = math.pow(outcome, 1/3)
         return (outcome + 1) / 2
     
@@ -42,9 +45,10 @@ class EloSystem:
         return (elo1+adj1, elo2+adj2)
 
 # testing
-myElo = EloSystem(50, 5)
-elo1 = 90
-for elo2 in range(100,-1,-10):
-    print(f"{elo1} vs {elo2}")
-    print(round(myElo.calculate_odds(elo1, elo2), 2))
-    print(myElo.calculate_elo(11, 5, elo1, elo2))
+if __name__ == "__main__":
+    myElo = EloSystem(250, 50, 5)
+    elo1 = 90
+    for elo2 in range(100,-1,-10):
+        print(f"{elo1} vs {elo2}")
+        print(round(myElo.calculate_odds(elo1, elo2), 2))
+        print(myElo.calculate_elo(11, 5, elo1, elo2))
