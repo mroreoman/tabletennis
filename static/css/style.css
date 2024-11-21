@@ -29,14 +29,19 @@
         text-align: center;
     }
 
+    .container {
+        /* min-height: 100%; */
+        min-height: 400px;
+    }
+
     footer {
         background-color: pink;
-        position: fixed;
-        bottom: 0px;
+        bottom: 0;
         width: 100%;
         padding: 10px;
         color: black;
         text-align: center;
+        position: relative;
     }
 
 /* Rankings */
@@ -89,3 +94,11 @@
     .neg {
         color: red;
     }
+
+    table {
+        text-align: center;
+    }
+
+    /* .matches {
+        padding-bottom: 40px;
+    } */

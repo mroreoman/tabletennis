@@ -27,8 +27,8 @@ class EloSystem:
     
     def calculate_outcome(self, s1:int, s2:int) -> float:
         outcome = (s1-s2) / max(s1,s2)
-        if self.adjust: #TODO: finish this
-            outcome = math.pow(outcome, 1/3)
+        if self.adjust: #TODO: test this
+            outcome = math.copysign(math.sqrt(abs(outcome)), outcome)
         return (outcome + 1) / 2
     
     def calculate_elo(self, s1:int, s2:int, elo1:float, elo2:float) -> tuple[float,float]:

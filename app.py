@@ -10,7 +10,7 @@ from werkzeug import exceptions
 from elosystem import EloSystem
 
 DATABASE_PATH = 'database.db'
-ELO_SYS = EloSystem(100, 50, 10)
+ELO_SYS = EloSystem(100, 50, 10, True)
 VALID_CHARS = string.ascii_letters + string.digits + " -'"
 MAX_SCORE = 99
 
@@ -20,7 +20,7 @@ def get_db_connection() -> sqlite3.Connection:
         con.row_factory = sqlite3.Row
         return con
     else:
-        raise Exception("database file not found")
+        raise Exception("database file not found!")
 
 load_dotenv()
 app = Flask(__name__)
@@ -59,10 +59,6 @@ def player():
         except exceptions.BadRequestKeyError:
             flash("Form not filled!")
         else:
-            # if name in get_names():
-            #     flash("Name is taken!")
-            # elif not all([c in VALID_CHARS for c in name]):
-            #     flash("Invalid characters in name!")
             if not all([c in VALID_CHARS for c in name]):
                 flash("Invalid characters in name!")
             else:

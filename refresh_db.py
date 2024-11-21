@@ -1,16 +1,25 @@
+import os
 import sys
 import sqlite3
 
 import app
 
-if len(sys.argv) > 1 and "-schema":
+if len(sys.argv) > 1 and "-schema" in sys.argv:
     con = sqlite3.connect(app.DATABASE_PATH)
+    if os.path.exists(app.DATABASE_PATH):
+        if input("database file already exists. drop tables to update schema (enter y/yes)? ") in ("y", "yes"):
+            print("clearing " + app.DATABASE_PATH)
+            con.execute("DROP TABLE IF EXISTS players")
+            con.execute("DROP TABLE IF EXISTS matches")
+            con.commit()
+    print("creating database with new schema at " + app.DATABASE_PATH)
     with open('schema.sql') as f:
         con.executescript(f.read())
     con.commit()
     con.close()
 
-if len(sys.argv) > 1 and "-elo":
+if len(sys.argv) > 1 and "-elo" in sys.argv:
+    print("recalculating elos in " + app.DATABASE_PATH)
     con = app.get_db_connection()
     elo_sys = app.ELO_SYS
 
