@@ -33,9 +33,9 @@ def index():
 @app.route('/rankings')
 def rankings():
     con = get_db_connection()
-    players = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
+    player_rows = con.execute('SELECT * FROM players ORDER BY elo DESC').fetchall()
     con.close()
-    return render_template('rankings.html', players=players)
+    return render_template('rankings.html', players=player_rows)
 
 @app.route('/input')
 def input():
@@ -47,9 +47,9 @@ def input():
 @app.route('/matches')
 def matches():
     con = get_db_connection()
-    matches = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
+    match_rows = con.execute('SELECT * FROM matches ORDER BY id DESC').fetchall()
     con.close()
-    return render_template('matches.html', matches=matches)
+    return render_template('matches.html', matches=match_rows)
 
 @app.route('/input/player', methods=('GET', 'POST'))
 def input_player():
@@ -97,8 +97,8 @@ def input_match():
                 flash("Score can't be tied!")
             else:
                 con = get_db_connection()
-                elo1:float = con.execute('SELECT elo FROM players WHERE name=?',(p1,)).fetchone()['elo']
-                elo2:float = con.execute('SELECT elo FROM players WHERE name=?',(p2,)).fetchone()['elo']
+                elo1:float = con.execute('SELECT elo FROM players WHERE name=?', (p1,)).fetchone()['elo']
+                elo2:float = con.execute('SELECT elo FROM players WHERE name=?', (p2,)).fetchone()['elo']
                 new1,new2 = ELO_SYS.calculate_elo(s1,s2,elo1,elo2)
                 con.execute(
                     "INSERT INTO matches(player1,score1,player2,score2,date,elochange1,elochange2) VALUES(?, ?, ?, ?, ?, ?, ?)",
@@ -111,6 +111,10 @@ def input_match():
                 return redirect(url_for('index'))
     return redirect(url_for('input'))
 
-@app.route('/players/<player>')
-def player_page(player):
-    pass
+@app.route('/player/<player_name>')
+def player_page(player_name: str):
+    player_name = player_name.replace("_", " ")
+    con = get_db_connection()
+    player_row = con.execute('SELECT * FROM players WHERE name=?', (player_name,)).fetchone()
+    matches = con.execute('SELECT * FROM matches WHERE player1=? or player2=?', (player_name, player_name)).fetchall()
+    return render_template('player.html', player=player_row, matches=matches)

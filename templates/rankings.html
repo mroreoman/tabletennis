@@ -6,7 +6,7 @@
             {% for player in players %}
                 <li>
                     <span class="elo"><span class="inner">{{ player['elo']|round(1) }}</span></span>
-                    <span class="player"><span class="inner">{{ player['name'] }}</span></span>
+                    <span class="player"><span class="inner"><a href="/player/{{ player['name'].replace(' ', '_') }}">{{ player['name'] }}</a></span></span>
                 </li>
             {% endfor %}
         </ul>
