@@ -11,7 +11,7 @@ from elosystem import EloSystem
 
 DATABASE_PATH = 'database.db'
 ELO_SYS = EloSystem(100, 50, 10, True)
-VALID_CHARS = string.ascii_letters + string.digits + " -'"
+VALID_CHARS = string.ascii_letters + string.digits + " "
 MAX_SCORE = 99
 
 def get_db_connection() -> sqlite3.Connection:
@@ -51,8 +51,8 @@ def matches():
     con.close()
     return render_template('matches.html', matches=matches)
 
-@app.route('/player', methods=('GET', 'POST'))
-def player():
+@app.route('/input/player', methods=('GET', 'POST'))
+def input_player():
     if request.method == 'POST':
         try:
             name = request.form['name'].strip()
@@ -75,8 +75,8 @@ def player():
                     con.close()
     return redirect(url_for('input'))
 
-@app.route('/match', methods=('GET', 'POST'))
-def match():
+@app.route('/input/match', methods=('GET', 'POST'))
+def input_match():
     if request.method == 'POST':
         print(request.form)
         try: 
@@ -110,3 +110,7 @@ def match():
                 con.close()
                 return redirect(url_for('index'))
     return redirect(url_for('input'))
+
+@app.route('/players/<player>')
+def player_page(player):
+    pass

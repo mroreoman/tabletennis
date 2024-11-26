@@ -3,7 +3,7 @@
 {% block content %}
     <div class="form">
         <h2>add match</h2>
-        <form action="/match" method="post">
+        <form action="/input/match" method="post">
             <div>
                 <label for="player1">player 1: </label>
                 <select id="player1" name="player1" required>
@@ -36,7 +36,7 @@
 
     <div class="form">
         <h2>add players</h2>
-        <form action="/player" method="post">
+        <form action="/input/player" method="post">
             <label for="name">name: </label>
             <input type="text" maxlength="50" id="name" name="name" placeholder="player name" required>
             <br>
