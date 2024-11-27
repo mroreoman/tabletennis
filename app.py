@@ -51,6 +51,14 @@ def matches():
     con.close()
     return render_template('matches.html', matches=match_rows)
 
+@app.route('/player/<player_name>')
+def player_page(player_name: str):
+    player_name = player_name.replace("_", " ")
+    con = get_db_connection()
+    player_row = con.execute('SELECT * FROM players WHERE name=?', (player_name,)).fetchone()
+    matches = con.execute('SELECT * FROM matches WHERE player1=? or player2=? ORDER BY id DESC', (player_name, player_name)).fetchall()
+    return render_template('player.html', player=player_row, matches=matches)
+
 @app.route('/input/player', methods=('GET', 'POST'))
 def input_player():
     if request.method == 'POST':
@@ -110,11 +118,3 @@ def input_match():
                 con.close()
                 return redirect(url_for('index'))
     return redirect(url_for('input'))
-
-@app.route('/player/<player_name>')
-def player_page(player_name: str):
-    player_name = player_name.replace("_", " ")
-    con = get_db_connection()
-    player_row = con.execute('SELECT * FROM players WHERE name=?', (player_name,)).fetchone()
-    matches = con.execute('SELECT * FROM matches WHERE player1=? or player2=?', (player_name, player_name)).fetchall()
-    return render_template('player.html', player=player_row, matches=matches)

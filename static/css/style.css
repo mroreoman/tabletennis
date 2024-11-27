@@ -1,5 +1,5 @@
 /* Reset */
-    html, body, h1, h2, p, ul {
+    * {
         padding: 0;
         margin: 0;
     }
@@ -58,23 +58,22 @@
         list-style-type: none;
     }
 
+    #rankings {
+        margin: auto;
+        td {
+            padding: 5px;
+            font-size: large;
+        }
+    }
+
     .elo {
-        float: left;
         width: 50%;
         text-align: right;
-        font-size: large;
     }
 
     .player {
-        float: left;
         width: 50%;
         text-align: left;
-        font-size: large;
-    }
-
-    .inner {
-        display: inline-block;
-        padding: 5px;
     }
 
 /* Input */
@@ -102,24 +101,29 @@
         text-align: center;
     }
 
+    #match_table {
+        margin: auto;
+        text-align: center;
+        border-collapse: collapse;
+        tr {
+            border-bottom: 2px solid gray;
+        }
+        td {
+            padding: 5px;
+        }
+        th {
+            padding: 5px 20px;
+        }
+    }
+
+    #notes {
+        min-width: 100px;
+    }
+
     .pos {
         color: green;
     }
 
     .neg {
         color: red;
-    }
-
-    table {
-        text-align: center;
-        margin: auto;
-        width: 50%;
-    }
-
-    #date {
-        width: 25%;
-    }
-
-    #note {
-        width: 25%;
     }

@@ -34,39 +34,74 @@
 </html>
 
 {% macro match_table() %}
-    <table>
+    <!-- <table>
         <tr>
             <th id="date">date</th>
-            <th></th>
-            <th>player 1</th>
-            <th></th>
-            <td></td>
-            <th></th>
-            <th>player 2</th>
-            <th></th>
+            <th id="p1">player 1</th>
+            <th id="score">score</th>
+            <th id="p2">player 2</th>
+            <th id="elochange">elo +/-</th>
             <th id="notes">notes</th>
         </tr>
         {% for match in matches %}
         <tr>
-            <td>{{ match.date }}</td>
+            <td>{{ match.date[5:] }}</td>
+            <td>{{ match.player1 }}</td>
+            <td>{{ match.score1 }} - {{ match.score2 }}</td>
+            <td>{{ match.player2 }}</td>
+            <td>{{ match.elochange1|abs|round(1) }}</td>
+            <td>{{match.notes}}</td>
+        </tr>
+        {% endfor %}
+    </table> -->
+
+    <!-- <table>
+        <tr>
+            <th id="date">date</th>
+            <th id="p1">player 1</th>
+            <th id="score">score</th>
+            <th id="p2">player 2</th>
+            <th id="notes">notes</th>
+        </tr>
+        {% for match in matches %}
+        <tr>
+            <td>{{ match.date[5:] }}</td>
 
             {% if match.elochange1 > 0 %}
-                <td class="pos">+{{ match.elochange1|round(1) }}</td>
+                <td>{{ match.player1 }} (<span class="pos">+{{ match.elochange1|round(1) }}</span>)</td>
             {% else %}
-                <td class="neg">{{ match.elochange1|round(1) }}</td>
+                <td>{{ match.player1 }} (<span class="neg">{{ match.elochange1|round(1) }}</span>)</td>
             {% endif %}
-            <td>{{ match.player1 }}</td>
-            <td>{{ match.score1 }}</td>
-            <td>-</td>
-            <td>{{ match.score2 }}</td>
-            <td>{{ match.player2 }}</td>
+            
+            <td>{{ match.score1 }} - {{ match.score2 }}</td>
+            
             {% if match.elochange2 > 0 %}
-                <td class="pos">+{{ match.elochange2|round(1) }}</td>
+                <td>{{ match.player2 }} (<span class="pos">+{{ match.elochange2|round(1) }}</span>)</td>
             {% else %}
-                <td class="neg">{{ match.elochange2|round(1) }}</td>
+                <td>{{ match.player2 }} (<span class="neg">{{ match.elochange2|round(1) }}</span>)</td>
             {% endif %}
-
+            
             <td>{{match.notes}}</td>
+        </tr>
+        {% endfor %}
+    </table> -->
+
+    <table id="match_table">
+        <tr>
+            <th id="date">date</th>
+            <th id="p1">player 1</th>
+            <th id="score">score</th>
+            <th id="p2">player 2</th>
+            <th id="notes">notes</th>
+        </tr>
+        {% for match in matches %}
+        <tr>
+            <td>{{ match.date[5:] }}</td>
+            <td>{{ match.player1 }}<br><span class="elo">(101.5)</span></td>
+            <td>{{ match.score1 }} - {{ match.score2 }}<br>(± {{ match.elochange1|abs|round(1) }})</td>
+            <td>{{ match.player2 }}<br>(90.6)</td>
+            <td>{{match.notes}}</td>
+            <!-- <td>i got broads in atlanta</td> -->
         </tr>
         {% endfor %}
     </table>

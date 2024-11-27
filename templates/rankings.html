@@ -2,13 +2,13 @@
 
 {% block content %}
     <div class="padder">
-        <ul>
+        <table id="rankings">
             {% for player in players %}
-                <li>
-                    <span class="elo"><span class="inner">{{ player.elo|round(1) }}</span></span>
-                    <span class="player"><span class="inner"><a href="/player/{{ player.name.replace(' ', '_') }}">{{ player.name }}</a></span></span>
-                </li>
+                <tr>
+                    <td class="elo">{{ player.elo|round(1) }}</td>
+                    <td class="player"><a href="/player/{{ player.name.replace(' ', '_') }}">{{ player.name }}</a></td>
+                <tr>
             {% endfor %}
-        </ul>
+        </table>
     </div>
 {% endblock %}
